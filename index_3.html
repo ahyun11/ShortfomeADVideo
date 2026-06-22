@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정아현 숏폼 포트폴리오</title>
+<style>
+  :root {
+    --bg: #0b0b0c;
+    --surface: #141416;
+    --border: rgba(255,255,255,0.08);
+    --text: #f2f2f0;
+    --text-dim: #8c8c8c;
+    --accent: #d8ff4d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { background: var(--bg); }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 64px 24px 40px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  header p.desc {
+    font-size: 15px;
+    color: var(--text-dim);
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 28px;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .meta-item .num {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .meta-item .label {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* ---------- Feed grid ---------- */
+  .feed {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+
+  .card {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    background: var(--surface);
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
+  .card iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 177.78%; /* keeps 9:16 fill regardless of card box */
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    border: none;
+    pointer-events: none;
+  }
+
+  .card .play-badge {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.0);
+    transition: background 0.2s ease;
+    z-index: 2;
+  }
+
+  .card .play-badge svg {
+    width: 28px;
+    height: 28px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .card:hover .play-badge {
+    background: rgba(0,0,0,0.15);
+  }
+
+  .card .index {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    background: rgba(0,0,0,0.45);
+    padding: 2px 7px;
+    border-radius: 4px;
+    z-index: 2;
+    font-weight: 500;
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 40px 20px;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox-inner {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 9 / 16;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .lightbox-inner iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -44px;
+    right: 0;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  footer .brand {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dim);
+  }
+
+  footer a {
+    color: var(--text);
+    font-size: 14px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 2px;
+  }
+
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 720px) {
+    .feed { grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    header { padding: 48px 20px 32px; }
+    .meta-row { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Short-form ad video</div>
+  <h1>정아현 숏폼 포트폴리오</h1>
+  <p class="desc">AI 기반 광고 숏폼 영상 작업물 모음. 각 카드를 클릭하면 영상이 재생됩니다.</p>
+  <div class="meta-row">
+    <div class="meta-item">
+      <div class="num">23</div>
+      <div class="label">works</div>
+    </div>
+    <div class="meta-item">
+      <div class="num">9:16</div>
+      <div class="label">format</div>
+    </div>
+    <div class="meta-item">
+      <div class="num">2026</div>
+      <div class="label">updated</div>
+    </div>
+  </div>
+</header>
+
+<section class="feed" id="feed"></section>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner" id="lightbox-inner">
+    <button class="lightbox-close" id="lightbox-close" aria-label="닫기">&times;</button>
+  </div>
+</div>
+
+<footer>
+  <a href="mailto:dkgusdl106@gmail.com">dkgusdl106@gmail.com</a>
+</footer>
+
+<script>
+  // Vimeo video IDs + hash (from share links)
+  const videos = [
+    { id: "1203543144", hash: "cc696ac77e" },
+    { id: "1203543020", hash: "ebf149daca" },
+    { id: "1203543017", hash: "6cec5e0036" },
+    { id: "1203543018", hash: "b78e787e54" },
+    { id: "1203543016", hash: "4ba20a959b" },
+    { id: "1203543666", hash: "38bfd3408a" },
+    { id: "1203543736", hash: "d3bf131460" },
+    { id: "1203543735", hash: "6487a9db50" },
+    { id: "1203543836", hash: "f7953d51ef" },
+    { id: "1203543838", hash: "657879050f" },
+    { id: "1203543671", hash: "53cc58b777" },
+    { id: "1203545531", hash: "a06a31486c" },
+    { id: "1203545573", hash: "26ddfaa6b4" },
+    { id: "1203545571", hash: "282b95c924" },
+    { id: "1203545624", hash: "86bbb0de4d" },
+    { id: "1203543533", hash: "c3735ae039" },
+    { id: "1203543530", hash: "48eb5c545c" },
+    { id: "1203545530", hash: "78f05e992f" },
+    { id: "1203545626", hash: "4915727360" },
+    { id: "1203543619", hash: "abf5edb7a3" },
+    { id: "1203543532", hash: "409dfe541e" },
+    { id: "1203543531", hash: "dc4546dd40" }
+  ];
+
+  const feed = document.getElementById('feed');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxInner = document.getElementById('lightbox-inner');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  function vimeoThumbUrl(id, hash) {
+    return `https://player.vimeo.com/video/${id}?h=${hash}&background=1&autoplay=0&loop=0&muted=1&controls=0`;
+  }
+
+  function vimeoPlayUrl(id, hash) {
+    return `https://player.vimeo.com/video/${id}?h=${hash}&autoplay=1&loop=1&muted=0&title=0&byline=0&portrait=0`;
+  }
+
+  videos.forEach((v, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <iframe src="${vimeoThumbUrl(v.id, v.hash)}" allow="autoplay" loading="lazy"></iframe>
+      <div class="play-badge">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <span class="index">${String(i + 1).padStart(2, '0')}</span>
+    `;
+    card.addEventListener('click', () => openLightbox(v));
+    feed.appendChild(card);
+  });
+
+  function openLightbox(v) {
+    const iframe = document.createElement('iframe');
+    iframe.src = vimeoPlayUrl(v.id, v.hash);
+    iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+    iframe.allowFullscreen = true;
+    lightboxInner.appendChild(iframe);
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    const iframe = lightboxInner.querySelector('iframe');
+    if (iframe) iframe.remove();
+  }
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+
+</body>
+</html>
